@@ -9,7 +9,7 @@ class InfoPanel(tk.Frame):
 
         info_text = (
             "All-in-One Developer Tool\n"
-            "Version: 1.0.0\n\n"
+            "Version: 2.0.0\n\n"
             "This tool integrates multiple utilities for developers, including:\n"
             "- Code Editor with syntax highlighting and execution support.\n"
             "- API Tester for testing HTTP requests.\n"
@@ -17,8 +17,8 @@ class InfoPanel(tk.Frame):
             "- Task List to keep track of your tasks.\n"
             "- UX/UI Designer to design interfaces.\n"
             "- SFTP Manager for file transfers.\n\n"
-            "Developed by Your Name\n"
-            "Contact: your.email@example.com"
+            "Developed by SpritesDevelopments\n"
+            "Contact: https://discord.gg/pPm29ECmNV"
         )
 
         self.info_label = tk.Label(
