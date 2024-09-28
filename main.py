@@ -8,6 +8,7 @@ from task_list import TaskList
 from ux_ui_designer import CanvasUI, ComponentLibrary
 from sftp_manager import SFTPManager
 from info_panel import InfoPanel
+from discord_bot_runner import DiscordBotRunner  # Import the new panel
 
 class DeveloperToolApp(tk.Tk):
     def __init__(self):
@@ -58,6 +59,7 @@ class DeveloperToolApp(tk.Tk):
         self.canvas_frame = CanvasUI(self.main_frame, self.app_settings)
         self.library_frame = ComponentLibrary(self.main_frame, self.canvas_frame, self.app_settings)
         self.sftp_manager = SFTPManager(self.main_frame, self.app_settings)
+        self.discord_bot_runner = DiscordBotRunner(self.main_frame, self.app_settings)  # Initialize the new panel
 
         # List of panels to apply settings
         self.panels = [
@@ -69,6 +71,7 @@ class DeveloperToolApp(tk.Tk):
             self.canvas_frame,
             self.library_frame,
             self.sftp_manager,
+            self.discord_bot_runner,  # Add to panels list
         ]
 
         # Menubar for the entire app
@@ -122,6 +125,7 @@ class DeveloperToolApp(tk.Tk):
             ("Task List", self.show_task_list),
             ("UX/UI Design", self.show_canvas_ui),
             ("SFTP Manager", self.show_sftp_manager),
+            ("Discord Bot Runner", self.show_discord_bot_runner),  # New navigation button
             ("Info", self.show_info_panel),
         ]
 
@@ -209,6 +213,11 @@ class DeveloperToolApp(tk.Tk):
         """Show the SFTP Manager panel."""
         self.hide_all_panels()
         self.sftp_manager.pack(fill="both", expand=True)
+
+    def show_discord_bot_runner(self):
+        """Show the Discord Bot Runner panel."""
+        self.hide_all_panels()
+        self.discord_bot_runner.pack(fill="both", expand=True)
 
 if __name__ == "__main__":
     app = DeveloperToolApp()
