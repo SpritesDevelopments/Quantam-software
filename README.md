@@ -11,10 +11,11 @@ Git Repository for the ALl in one developer tool.
 ## V2
 
 - better code editer like vs code.
-- better UIs for all Parts oF the tool.
+- better UIs for all Parts of the tool.
 - reworking setting for all setings to work.
 - split main.py down to small parts to make for easy development.
-- added more to UX/UI Designer. 
+- added more to UX/UI Designer.
+- add  discord bot runner, with multi-langs Python, NodeJS, Go, Ruby.
 
 ## V1
 
