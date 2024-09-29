@@ -4,7 +4,7 @@ Git Repository for the ALl in one developer tool.
 
 NOTE
 Git Code is always One stage behind 
-V2 official release is later
+V2 official release is later website has recent version of tool
 
 ## Features
 
