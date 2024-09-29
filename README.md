@@ -16,7 +16,8 @@ Git Repository for the ALl in one developer tool.
 - split main.py down to small parts to make for easy development.
 - added more to UX/UI Designer.
 - Added support for Discord Bot runner.
-- add  discord bot runner, with multi-langs Python, NodeJS, Go, Ruby.
+- Added discord bot runner, with multi-langs Python, NodeJS, Go, Ruby.
+- Added Discord Bot Templates for Nodes, Python.
 
 ## V1
 
