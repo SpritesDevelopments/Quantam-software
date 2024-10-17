@@ -110,11 +110,13 @@ class TaskList(tk.Frame):
 
     def refresh_task_listbox(self):
         self.task_listbox.delete(0, tk.END)
-        for task in self.tasks:
+        for i, task in enumerate(self.tasks):
             task_text = task['text']
             if task['completed']:
                 task_text += " ✔"
             self.task_listbox.insert(tk.END, task_text)
+            # Add a right-click menu to each task
+            self.task_listbox.itemconfig(i, fg='green' if task['completed'] else 'black')
         self.apply_widget_settings(self.task_listbox)
 
     def save_tasks(self):

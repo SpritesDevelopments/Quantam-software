@@ -1,10 +1,9 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk, Menu
+from tkinter import filedialog, messagebox, ttk
 from tkinter.scrolledtext import ScrolledText
 import subprocess
 import threading
 import os
-import sys
 import keyword
 import re
 

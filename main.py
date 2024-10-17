@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+from tkinter import ttk
 from settings_panel import SettingsPanel
 from code_editor import CodeEditor
 from api_tester import APITester
@@ -8,13 +9,12 @@ from task_list import TaskList
 from ux_ui_designer import CanvasUI, ComponentLibrary
 from sftp_manager import SFTPManager
 from info_panel import InfoPanel
-from discord_bot_runner import DiscordBotRunner  # Import the new panel
+from discord_bot_runner import DiscordBotRunner
 
 class DeveloperToolApp(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        # Check if the icon exists
         icon_path = "allinonedevelopertool.ico"
         if os.path.exists(icon_path):
             self.iconbitmap(icon_path)
@@ -23,17 +23,16 @@ class DeveloperToolApp(tk.Tk):
 
         self.title("All-in-One Developer Tool")
         self.geometry("1200x800")
-        self.config(bg="#F9F9F9")
+        self.config(bg="#282c34")
 
-        # Application settings
         self.app_settings = {
-            'theme': "Light",
+            'theme': "Dark",
             'font_size': 12,
             'font_family': "Helvetica",
-            'bg_color': "white",
-            'text_color': "black",
-            'console_bg_color': "#f4f4f4",
-            'console_text_color': "#000",
+            'bg_color': "#222",
+            'text_color': "#eee",
+            'console_bg_color': "#333",
+            'console_text_color': "#eee",
             'word_wrap': True,
             'auto_save': False,
             'syntax_colors': {
@@ -45,11 +44,13 @@ class DeveloperToolApp(tk.Tk):
             },
         }
 
-        # Create the main content area
-        self.main_frame = tk.Frame(self, bg="white")
+        self.style = ttk.Style()
+        self.style.theme_use('clam')
+        self.configure_styles()
+
+        self.main_frame = ttk.Frame(self, style='Main.TFrame')
         self.main_frame.pack(side="right", fill="both", expand=True)
 
-        # Create all panels with self.main_frame as the master
         self.code_editor = CodeEditor(self.main_frame, self.app_settings)
         self.api_tester = APITester(self.main_frame, self.app_settings)
         self.git_manager = GitManager(self.main_frame, self.app_settings)
@@ -59,9 +60,8 @@ class DeveloperToolApp(tk.Tk):
         self.canvas_frame = CanvasUI(self.main_frame, self.app_settings)
         self.library_frame = ComponentLibrary(self.main_frame, self.canvas_frame, self.app_settings)
         self.sftp_manager = SFTPManager(self.main_frame, self.app_settings)
-        self.discord_bot_runner = DiscordBotRunner(self.main_frame, self.app_settings)  # Initialize the new panel
+        self.discord_bot_runner = DiscordBotRunner(self.main_frame, self.app_settings)
 
-        # List of panels to apply settings
         self.panels = [
             self.code_editor,
             self.api_tester,
@@ -71,24 +71,33 @@ class DeveloperToolApp(tk.Tk):
             self.canvas_frame,
             self.library_frame,
             self.sftp_manager,
-            self.discord_bot_runner,  # Add to panels list
+            self.discord_bot_runner,
         ]
 
-        # Menubar for the entire app
         self.menubar = tk.Menu(self)
         self.create_menu()
         self.config(menu=self.menubar)
 
-        # Navigation Menu (Left Sidebar)
-        self.nav_frame = tk.Frame(self, bg="#424242", width=200)
+        self.nav_frame = ttk.Frame(self, style='Nav.TFrame', width=200)
         self.nav_frame.pack(side="left", fill="y")
 
-        # Create navigation buttons
         self.create_navigation_buttons()
 
-        # Start by showing the Code Editor panel
         self.hide_all_panels()
         self.code_editor.pack(fill="both", expand=True)
+
+    def configure_styles(self):
+        self.style.configure('Main.TFrame', background='#222')
+        self.style.configure('Nav.TFrame', background='#333')
+        self.style.configure('TButton', 
+                             background='#333', 
+                             foreground='white', 
+                             font=('Helvetica', 12),
+                             borderwidth=0,
+                             focuscolor='#555')
+        self.style.map('TButton', 
+                       background=[('active', '#555')],
+                       foreground=[('active', 'white')])
 
     def create_menu(self):
         file_menu = tk.Menu(self.menubar, tearoff=0)
@@ -116,7 +125,6 @@ class DeveloperToolApp(tk.Tk):
         self.menubar.add_cascade(label="Settings", menu=settings_menu)
 
     def create_navigation_buttons(self):
-        # Sidebar navigation buttons
         buttons_data = [
             ("Code Editor", self.show_code_editor),
             ("API Tester", self.show_api_tester),
@@ -125,32 +133,26 @@ class DeveloperToolApp(tk.Tk):
             ("Task List", self.show_task_list),
             ("UX/UI Design", self.show_canvas_ui),
             ("SFTP Manager", self.show_sftp_manager),
-            ("Discord Bot Runner", self.show_discord_bot_runner),  # New navigation button
+            ("Discord Bot Runner", self.show_discord_bot_runner),
             ("Info", self.show_info_panel),
         ]
 
         for text, command in buttons_data:
-            btn = tk.Button(
+            btn = ttk.Button(
                 self.nav_frame,
                 text=text,
-                font=("Helvetica", 14),
-                bg="#424242",
-                fg="white",
-                bd=0,
-                relief=tk.FLAT,
                 command=command,
+                style='TButton'
             )
-            btn.pack(pady=10, padx=10, fill="x")
+            btn.pack(pady=5, padx=10, fill="x")
 
     def hide_all_panels(self):
-        # Hide all panels by forgetting their packing
         for panel in self.panels:
             panel.pack_forget()
         self.settings_panel.pack_forget()
         self.canvas_frame.pack_forget()
         self.library_frame.pack_forget()
 
-    # Panel show functions
     def show_code_editor(self):
         self.hide_all_panels()
         self.code_editor.pack(fill="both", expand=True)
@@ -165,29 +167,23 @@ class DeveloperToolApp(tk.Tk):
         self.apply_settings_to_app()
 
     def apply_settings_to_app(self):
-        """Apply settings like theme, font size, etc. to all components where relevant."""
         selected_theme = self.app_settings['theme']
         font_family = self.app_settings['font_family']
         font_size = self.app_settings['font_size']
 
-        # Apply the theme to the entire app (light or dark)
         if selected_theme == "Dark":
-            self.config(bg="#333")
-            self.nav_frame.config(bg="#333")
-            self.main_frame.config(bg="#222")
-            fg_color = "white"
+            self.style.configure('Main.TFrame', background='#222')
+            self.style.configure('Nav.TFrame', background='#333')
+            self.style.configure('TButton', background='#333', foreground='white')
+            self.style.map('TButton', background=[('active', '#555')])
         else:
-            self.config(bg="#F9F9F9")
-            self.nav_frame.config(bg="#424242")
-            self.main_frame.config(bg="white")
-            fg_color = "black"
+            self.style.configure('Main.TFrame', background='white')
+            self.style.configure('Nav.TFrame', background='#424242')
+            self.style.configure('TButton', background='#424242', foreground='black')
+            self.style.map('TButton', background=[('active', '#666')])
 
-        # Update navigation buttons' colors
-        for child in self.nav_frame.winfo_children():
-            if isinstance(child, tk.Button):
-                child.config(bg=self.nav_frame.cget('bg'), fg=fg_color)
+        self.style.configure('TButton', font=(font_family, font_size))
 
-        # Apply font settings to the code editor and other components
         for panel in self.panels:
             panel.apply_settings()
 
@@ -205,17 +201,14 @@ class DeveloperToolApp(tk.Tk):
         self.canvas_frame.pack(side="left", expand=True, fill="both")
 
     def show_info_panel(self):
-        """Show the Info Panel with details about the tool."""
         self.hide_all_panels()
         self.info_panel.pack(fill="both", expand=True)
 
     def show_sftp_manager(self):
-        """Show the SFTP Manager panel."""
         self.hide_all_panels()
         self.sftp_manager.pack(fill="both", expand=True)
 
     def show_discord_bot_runner(self):
-        """Show the Discord Bot Runner panel."""
         self.hide_all_panels()
         self.discord_bot_runner.pack(fill="both", expand=True)
 
