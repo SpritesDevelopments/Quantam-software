@@ -16,7 +16,7 @@ class InfoPanel(ttk.Frame):
             "- Task List to keep track of your tasks.\n"
             "- UX/UI Designer to design interfaces.\n"
             "- SFTP Manager for file transfers.\n\n"
-            "Developed by SpritesDevelopments\n"
+            "Developed by SpritesDevelopments and NNKtv28\n"
             "Contact: https://discord.gg/pPm29ECmNV"
         )
 
