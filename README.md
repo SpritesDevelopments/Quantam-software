@@ -12,6 +12,11 @@ V2 official release is later website has recent version of tool
 - API tester
 - TODO list
 
+## V3
+
+- revamped whole code and making so much better to work with.
+- more updates and features coming soon
+
 ## V2
 
 - better code editer like vs code.
